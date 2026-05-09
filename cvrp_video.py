@@ -16,7 +16,7 @@ BUBBLE_FILL = "#111A33"
 MIT_RED = "#A31F34"
 
 
-PREVIEW_FROM_SCENE = 11
+PREVIEW_FROM_SCENE = 1
 
 
 class SpeechBubble(VGroup):
@@ -199,7 +199,6 @@ class LetterMascot(VGroup):
 class CVRPVideo(Scene):
     def construct(self):
         self.camera.background_color = BACKGROUND
-
         if PREVIEW_FROM_SCENE == 1:
             self.play_scene_1_hook()
             self.play_scene_2_definition()
@@ -208,6 +207,11 @@ class CVRPVideo(Scene):
             self.play_scene_5_objective_function()
             self.play_scene_6_method_map()
             self.play_scene_7_branch_and_bound_tree()
+            self.play_scene_8_bounds_and_pruning()
+            self.play_scene_9_exact_methods_bridge()
+            self.play_scene_10_clarke_wright_starting_point()
+            self.play_scene_11_clarke_wright_merge_rule()
+            self.play_scene_12_closing()
 
         elif PREVIEW_FROM_SCENE == 2:
             self.setup_after_scene_1()
@@ -259,6 +263,8 @@ class CVRPVideo(Scene):
         elif PREVIEW_FROM_SCENE == 11:
             self.setup_after_scene_10()
             self.play_scene_11_clarke_wright_merge_rule()
+        elif PREVIEW_FROM_SCENE == 12:
+            self.play_scene_12_closing()
     
     def make_tree_node(self, text, center, width=2.25, height=0.82, stroke_color=GRAY):
         PANEL_FILL = "#111A33"
@@ -771,7 +777,7 @@ class CVRPVideo(Scene):
         title_group = VGroup(title, subtitle).move_to(ORIGIN)
 
         self.play(Write(title), FadeIn(subtitle, shift=DOWN), run_time=1.8)
-        self.wait(1.8*0.7)
+        self.wait(1.3*1.8*0.7)
 
         # Move title slightly upward, then fade it so the graph has space
         self.play(title_group.animate.shift(UP * 1.5), run_time=0.8)
@@ -792,7 +798,7 @@ class CVRPVideo(Scene):
             run_time=1.8,
         )
 
-        self.wait(1.8*0.3)
+        self.wait(1.3*1.8*0.3)
 
         # ------------------------------------------------------------
         # M guide appears in lower-right corner
@@ -820,7 +826,7 @@ class CVRPVideo(Scene):
         self.play(mascot.talk_close())
         self.play(mascot.look_left())
 
-        self.wait(1.8*0.6)
+        self.wait(1.3*1.8*0.6)
 
         # ------------------------------------------------------------
         # Brief route attempt
@@ -865,7 +871,7 @@ class CVRPVideo(Scene):
             run_time=2.0,
         )
 
-        self.wait(1.8*0.4)
+        self.wait(1.3*1.8*0.4)
 
         # This route attempt fades out, setting up Scene 2/3 later
         self.play(
@@ -884,7 +890,7 @@ class CVRPVideo(Scene):
         ).to_edge(DOWN).shift(UP * 0.35)
 
         self.play(FadeIn(closing_label, shift=UP), run_time=0.7)
-        self.wait(1.8*1.0)
+        self.wait(1.3*1.8*1.0)
 
         self.play(FadeOut(closing_label), run_time=0.5)
 
@@ -909,7 +915,7 @@ class CVRPVideo(Scene):
         ).to_edge(UP).shift(DOWN * 0.25)
 
         self.play(FadeIn(scene_title, shift=DOWN), run_time=0.7)
-        self.wait(0.4)
+        self.wait(1.3*0.4)
 
         # ------------------------------------------------------------
         # Capacity box in upper-right
@@ -935,7 +941,7 @@ class CVRPVideo(Scene):
         self.capacity_group = VGroup(self.capacity_box, self.capacity_text)
 
         self.play(FadeIn(self.capacity_group, shift=LEFT), run_time=0.8)
-        self.wait(0.4)
+        self.wait(1.3*0.4)
 
         # ------------------------------------------------------------
         # Mini labels: depot, customers, demand
@@ -962,7 +968,7 @@ class CVRPVideo(Scene):
         self.play(FadeIn(customer_callout, shift=DOWN), run_time=0.45)
         self.play(FadeIn(demand_callout, shift=LEFT), run_time=0.45)
 
-        self.wait(0.7)
+        self.wait(1.3*0.7)
 
         self.play(
             FadeOut(depot_callout),
@@ -1033,7 +1039,7 @@ class CVRPVideo(Scene):
         self.play(FadeIn(rules_box, scale=0.97), run_time=0.55)
         self.play(Write(rules_content[0]), run_time=0.55)
 
-        self.wait(0.2)
+        self.wait(1.3*0.2)
 
         for rule in rule_texts:
             visible_rows.append(make_rule_row(rule))
@@ -1045,7 +1051,7 @@ class CVRPVideo(Scene):
                 run_time=0.6,
             )
 
-        self.wait(0.6)
+        self.wait(1.3*0.6)
 
         rules_panel = VGroup(rules_box, rules_content)
 
@@ -1074,7 +1080,7 @@ class CVRPVideo(Scene):
         self.play(mascot.talk_open())
         self.play(mascot.talk_close())
 
-        self.wait(1.0)
+        self.wait(1.3*1.0)
 
         # ------------------------------------------------------------
         # Transition out of Scene 2
@@ -1090,7 +1096,7 @@ class CVRPVideo(Scene):
         )
 
         # Leave self.capacity_group on screen for Scene 3.
-        self.wait(0.3)
+        self.wait(1.3*0.3)
 
     def play_scene_3_capacity_problem(self):
         # ------------------------------------------------------------
@@ -1121,7 +1127,7 @@ class CVRPVideo(Scene):
         ).to_edge(UP).shift(DOWN * 0.22)
 
         self.play(FadeIn(scene_title, shift=DOWN), run_time=0.7)
-        self.wait(1.0)
+        self.wait(1.3*1.0)
 
         self.play(FadeOut(scene_title), run_time=0.45)
 
@@ -1169,7 +1175,7 @@ class CVRPVideo(Scene):
             run_time=2.4,
         )
 
-        self.wait(1.0)
+        self.wait(1.3*1.0)
 
         self.play(FadeOut(route_prompt), run_time=0.4)
 
@@ -1231,7 +1237,7 @@ class CVRPVideo(Scene):
         self.play(self.overloaded_route.animate.set_stroke(width=6), run_time=0.25)
         self.play(self.overloaded_route.animate.set_stroke(width=5), run_time=0.25)
 
-        self.wait(1.2)
+        self.wait(1.3*1.2)
 
         # ------------------------------------------------------------
         # I guide cameo
@@ -1260,7 +1266,7 @@ class CVRPVideo(Scene):
         self.play(mascot.talk_open())
         self.play(mascot.talk_close())
 
-        self.wait(1.1)
+        self.wait(1.3*1.1)
 
         self.play(FadeOut(bubble), FadeOut(mascot), run_time=0.55)
 
@@ -1330,7 +1336,7 @@ class CVRPVideo(Scene):
         self.comparison_panel.set_z_index(20)
 
         self.play(FadeIn(self.comparison_panel, scale=0.96), run_time=0.7)
-        self.wait(1.8)
+        self.wait(1.3*1.8)
 
         # ------------------------------------------------------------
         # End scene
@@ -1350,7 +1356,7 @@ class CVRPVideo(Scene):
             run_time=1.0,
         )
 
-        self.wait(1.3)
+        self.wait(1.3*1.3)
     
     def play_scene_4_feasible_vs_optimal(self):
         PANEL_FILL = "#111A33"
@@ -1376,7 +1382,7 @@ class CVRPVideo(Scene):
         ).to_edge(UP).shift(DOWN * 0.22)
 
         self.play(FadeIn(scene_title, shift=DOWN), run_time=0.65)
-        self.wait(0.7)
+        self.wait(1.3*0.7)
 
         # ------------------------------------------------------------
         # First message: infeasible route must be replaced
@@ -1388,7 +1394,7 @@ class CVRPVideo(Scene):
         ).to_edge(UP).shift(DOWN * 0.78)
 
         self.play(FadeIn(feasible_prompt, shift=DOWN), run_time=0.55)
-        self.wait(0.8)
+        self.wait(1.3*0.8)
 
         # Fade out the bad red route from Scene 3
         fade_bad_objects = []
@@ -1400,7 +1406,7 @@ class CVRPVideo(Scene):
         if fade_bad_objects:
             self.play(*[FadeOut(obj) for obj in fade_bad_objects], run_time=0.8)
 
-        self.wait(0.2)
+        self.wait(1.3*0.2)
 
         # ------------------------------------------------------------
         # Helper for route drawing
@@ -1449,7 +1455,7 @@ class CVRPVideo(Scene):
         self.play(Create(route_2_edges), run_time=0.95)
         self.play(Create(route_3_edges), run_time=0.95)
 
-        self.wait(0.4)
+        self.wait(1.3*0.4)
 
         # ------------------------------------------------------------
         # Demand check panel
@@ -1494,7 +1500,7 @@ class CVRPVideo(Scene):
         for row in route_rows:
             self.play(FadeIn(row, shift=RIGHT * 0.15), run_time=0.45)
 
-        self.wait(1.1)
+        self.wait(1.3*1.1)
 
         # ------------------------------------------------------------
         # I guide cameo: Feasible first, optimal second
@@ -1521,7 +1527,7 @@ class CVRPVideo(Scene):
         self.play(mascot.talk_open())
         self.play(mascot.talk_close())
 
-        self.wait(1.0)
+        self.wait(1.3*1.0)
 
         self.play(FadeOut(bubble), FadeOut(mascot), run_time=0.5)
 
@@ -1570,7 +1576,7 @@ class CVRPVideo(Scene):
         concept_panel.set_z_index(22)
 
         self.play(FadeIn(concept_panel, scale=0.96), run_time=0.6)
-        self.wait(1.5)
+        self.wait(1.3*1.5)
 
         # ------------------------------------------------------------
         # Transition out of Scene 4
@@ -1584,7 +1590,7 @@ class CVRPVideo(Scene):
             run_time=0.8,
         )
 
-        self.wait(0.3)
+        self.wait(1.3*0.3)
     
     def play_scene_5_objective_function(self):
         # ------------------------------------------------------------
@@ -1629,7 +1635,7 @@ class CVRPVideo(Scene):
         ).move_to(UP * 3.15 + LEFT * 1.25)
 
         self.play(FadeIn(scene_title, shift=DOWN), run_time=0.65)
-        self.wait(0.6)
+        self.wait(1.3*0.6)
 
         prompt = Text(
             "Among feasible routes, choose the lowest total cost.",
@@ -1638,7 +1644,7 @@ class CVRPVideo(Scene):
         ).move_to(UP * 2.55 + LEFT * 1.05)
 
         self.play(FadeIn(prompt, shift=DOWN), run_time=0.65)
-        self.wait(1.5)
+        self.wait(1.3*1.5)
         self.play(FadeOut(prompt), run_time=0.45)
         # ------------------------------------------------------------
         # Objective formula panel
@@ -1688,7 +1694,7 @@ class CVRPVideo(Scene):
         self.play(Write(objective_formula), run_time=0.85)
         self.play(FadeIn(formula_note, shift=UP), run_time=0.45)
 
-        self.wait(0.7)
+        self.wait(1.3*0.7)
 
         # ------------------------------------------------------------
         # T guide cameo
@@ -1715,7 +1721,7 @@ class CVRPVideo(Scene):
         self.play(mascot.talk_open())
         self.play(mascot.talk_close())
 
-        self.wait(0.7)
+        self.wait(1.3*0.7)
 
         # ------------------------------------------------------------
         # Slide the objective panel to the upper-right so the graph
@@ -1811,7 +1817,7 @@ class CVRPVideo(Scene):
                 Transform(total_cost_text, new_total_text),
                 run_time=0.40,
             )
-            self.wait(0.12)
+            self.wait(1.3*0.12)
             self.play(FadeOut(highlight), run_time=0.22)
 
         # Final total label
@@ -1822,12 +1828,12 @@ class CVRPVideo(Scene):
         ).move_to(total_cost_box.get_center())
 
         self.play(Transform(total_cost_text, final_total_text), run_time=0.45)
-        self.wait(1.0)
+        self.wait(1.3*1.0)
         total_cost_group = VGroup(total_cost_box, total_cost_text)
         total_cost_group.move_to(RIGHT * 3.95 + DOWN * 1.85)
         total_cost_group.set_z_index(22)
 
-        self.wait(1.2)
+        self.wait(1.3*1.2)
 
         # ------------------------------------------------------------
         # Transition out of Scene 5
@@ -1842,9 +1848,9 @@ class CVRPVideo(Scene):
             run_time=0.85,
         )
 
-        self.wait(0.3)
+        self.wait(1.3*0.3)
 
-        self.wait(0.3)
+        self.wait(1.3*0.3)
 
     def play_scene_6_method_map(self):
         # ------------------------------------------------------------
@@ -1894,7 +1900,7 @@ class CVRPVideo(Scene):
                 run_time=0.85,
             )
 
-        self.wait(0.3)
+        self.wait(1.3*0.3)
 
         # ------------------------------------------------------------
         # Title
@@ -1906,7 +1912,7 @@ class CVRPVideo(Scene):
         ).to_edge(UP).shift(DOWN * 0.35)
 
         self.play(FadeIn(self.method_map_title, shift=DOWN), run_time=0.7)
-        self.wait(0.3)
+        self.wait(1.3*0.3)
 
         # ------------------------------------------------------------
         # Method rows
@@ -1966,7 +1972,7 @@ class CVRPVideo(Scene):
         for row in self.method_map_rows:
             self.play(FadeIn(row, shift=RIGHT * 0.25), run_time=0.55)
 
-        self.wait(0.5)
+        self.wait(1.3*0.5)
 
         # ------------------------------------------------------------
         # Pulse the two main examples
@@ -1982,7 +1988,7 @@ class CVRPVideo(Scene):
             run_time=0.25,
         )
 
-        self.wait(0.4)
+        self.wait(1.3*0.4)
 
         # ------------------------------------------------------------
         # T guide cameo
@@ -2009,7 +2015,7 @@ class CVRPVideo(Scene):
         self.play(mascot.talk_open())
         self.play(mascot.talk_close())
 
-        self.wait(1.1)
+        self.wait(1.3*1.1)
 
         self.play(FadeOut(bubble), FadeOut(mascot), run_time=0.5)
 
@@ -2017,7 +2023,7 @@ class CVRPVideo(Scene):
         # End Scene 6
         # Keep the method map on screen for Scene 7 transition.
         # ------------------------------------------------------------
-        self.wait(0.5)
+        self.wait(1.3*0.5)
 
     def play_scene_7_branch_and_bound_tree(self):
         TREE_BLUE = "#4CC9F0"
@@ -2041,7 +2047,7 @@ class CVRPVideo(Scene):
                 run_time=0.65,
             )
             self.remove(*scene_6_leftovers)
-            self.wait(0.2)
+            self.wait(1.3*0.2)
 
         self.build_branch_bound_toy_instance()
 
@@ -2080,7 +2086,7 @@ class CVRPVideo(Scene):
             FadeIn(self.bb_status_panel, shift=LEFT * 0.1),
             run_time=1.0,
         )
-        self.wait(2.0)
+        self.wait(1.3*2.0)
 
         # ------------------------------------------------------------
         # Show the first branching decision
@@ -2093,21 +2099,21 @@ class CVRPVideo(Scene):
         decision_text.set_z_index(25)
 
         self.play(FadeIn(decision_text, shift=DOWN), run_time=0.55)
-        self.wait(0.8)
+        self.wait(1.3*0.8)
 
         self.play(
             self.bb_line_include_ac.animate.set_opacity(1),
             self.bb_include_ac.animate.set_opacity(1),
             run_time=0.75,
         )
-        self.wait(0.6)
+        self.wait(1.3*0.6)
 
         self.play(
             self.bb_line_exclude_ac.animate.set_opacity(1),
             self.bb_exclude_ac.animate.set_opacity(1),
             run_time=0.75,
         )
-        self.wait(1.0)
+        self.wait(1.3*1.0)
 
         # ------------------------------------------------------------
         # M guide cameo: branch decision explanation
@@ -2130,10 +2136,10 @@ class CVRPVideo(Scene):
         self.play(FadeIn(bubble_m, shift=LEFT), run_time=0.40)
         self.play(mascot_m.talk_open())
         self.play(mascot_m.talk_close())
-        self.wait(0.9)
+        self.wait(1.3*0.9)
 
         self.play(FadeOut(bubble_m), FadeOut(mascot_m), run_time=0.45)
-        self.wait(0.3)
+        self.wait(1.3*0.3)
 
         # ------------------------------------------------------------
         # Highlight the chosen route on the toy graph
@@ -2142,14 +2148,14 @@ class CVRPVideo(Scene):
             Indicate(self.bb_include_ac, color=TREE_BLUE, scale_factor=1.06),
             run_time=0.7,
         )
-        self.wait(0.5)
+        self.wait(1.3*0.5)
 
         self.play(
             Indicate(self.bb_nodes["A"], color=TREE_BLUE, scale_factor=1.15),
             Indicate(self.bb_nodes["C"], color=TREE_BLUE, scale_factor=1.15),
             run_time=0.8,
         )
-        self.wait(0.5)
+        self.wait(1.3*0.5)
 
         # Highlight route and relevant costs
         self.play(
@@ -2159,7 +2165,7 @@ class CVRPVideo(Scene):
             self.bb_cost_labels["0C"].animate.set_opacity(1),
             run_time=1.0,
         )
-        self.wait(0.8)
+        self.wait(1.3*0.8)
 
         # ------------------------------------------------------------
         # Compute route demand and route cost
@@ -2174,7 +2180,7 @@ class CVRPVideo(Scene):
         )
 
         self.play(FadeIn(card, scale=0.96), run_time=0.65)
-        self.wait(1.8)
+        self.wait(1.3*1.8)
 
         # ------------------------------------------------------------
         # Remaining customers
@@ -2193,10 +2199,10 @@ class CVRPVideo(Scene):
             Indicate(self.bb_nodes["D"], color="#FFD166", scale_factor=1.15),
             run_time=0.8,
         )
-        self.wait(0.4)
+        self.wait(1.3*0.4)
 
         self.play(Transform(card, remain_card), run_time=0.65)
-        self.wait(1.8)
+        self.wait(1.3*1.8)
 
         # ------------------------------------------------------------
         # Route for B
@@ -2206,7 +2212,7 @@ class CVRPVideo(Scene):
             self.bb_cost_labels["0B"].animate.set_opacity(1),
             run_time=0.9,
         )
-        self.wait(0.6)
+        self.wait(1.3*0.6)
 
         b_card = make_flash_card(
             [
@@ -2218,7 +2224,7 @@ class CVRPVideo(Scene):
         )
 
         self.play(Transform(card, b_card), run_time=0.65)
-        self.wait(1.6)
+        self.wait(1.3*1.6)
 
         # ------------------------------------------------------------
         # Route for D
@@ -2228,7 +2234,7 @@ class CVRPVideo(Scene):
             self.bb_cost_labels["0D"].animate.set_opacity(1),
             run_time=0.9,
         )
-        self.wait(0.6)
+        self.wait(1.3*0.6)
 
         d_card = make_flash_card(
             [
@@ -2240,7 +2246,7 @@ class CVRPVideo(Scene):
         )
 
         self.play(Transform(card, d_card), run_time=0.65)
-        self.wait(1.6)
+        self.wait(1.3*1.6)
 
         # ------------------------------------------------------------
         # Final total
@@ -2254,7 +2260,7 @@ class CVRPVideo(Scene):
         )
 
         self.play(Transform(card, final_card), run_time=0.65)
-        self.wait(1.8)
+        self.wait(1.3*1.8)
 
         solved_include = self.make_tree_node(
             "Complete\ncost 56",
@@ -2273,7 +2279,7 @@ class CVRPVideo(Scene):
         ).move_to(self.bb_status_box.get_center())
 
         self.play(Transform(self.bb_status_text, best_56), run_time=0.55)
-        self.wait(1.0)
+        self.wait(1.3*1.0)
 
         # ------------------------------------------------------------
         # Prepare the other branch for Scene 8
@@ -2285,16 +2291,16 @@ class CVRPVideo(Scene):
         ).move_to(RIGHT * 2.25 + DOWN * 2.55)
 
         self.play(FadeIn(next_text, shift=UP), run_time=0.5)
-        self.wait(1.0)
+        self.wait(1.3*1.0)
 
         self.play(
             Indicate(self.bb_exclude_ac, color=WHITE, scale_factor=1.05),
             run_time=0.7,
         )
-        self.wait(0.8)
+        self.wait(1.3*0.8)
 
         self.play(FadeOut(next_text), FadeOut(card), FadeOut(decision_text), run_time=0.5)
-        self.wait(0.6)
+        self.wait(1.3*0.6)
 
     def play_scene_8_bounds_and_pruning(self):
         # ------------------------------------------------------------
@@ -2375,7 +2381,7 @@ class CVRPVideo(Scene):
         run_time=0.75,
         )
 
-        self.wait(0.8)
+        self.wait(1.3*0.8)
 
         # ------------------------------------------------------------
         # Focus on the other branch
@@ -2389,7 +2395,7 @@ class CVRPVideo(Scene):
         run_time=0.9,
         )
 
-        self.wait(0.5)
+        self.wait(1.3*0.5)
 
         bound_card = make_scene8_card(
         [
@@ -2401,7 +2407,7 @@ class CVRPVideo(Scene):
         )
 
         self.play(FadeIn(bound_card, scale=0.96), run_time=0.65)
-        self.wait(1.8)
+        self.wait(1.3*1.8)
 
         exclude_lb_node = self.make_tree_node(
         "Avoid R_AC\nLB = 49",
@@ -2412,7 +2418,7 @@ class CVRPVideo(Scene):
         )
 
         self.play(Transform(self.bb_exclude_ac, exclude_lb_node), run_time=0.65)
-        self.wait(0.7)
+        self.wait(1.3*0.7)
         self.play(FadeOut(bound_card), run_time=0.4)
 
         # ------------------------------------------------------------
@@ -2426,7 +2432,7 @@ class CVRPVideo(Scene):
         branch_prompt.set_z_index(30)
 
         self.play(FadeIn(branch_prompt, shift=DOWN), run_time=0.55)
-        self.wait(0.8)
+        self.wait(1.3*0.8)
 
         self.bb_use_ab = self.make_tree_node(
         "Use\nR_AB",
@@ -2468,14 +2474,14 @@ class CVRPVideo(Scene):
         self.bb_use_ab.animate.set_opacity(1),
         run_time=0.75,
         )
-        self.wait(0.45)
+        self.wait(1.3*0.45)
 
         self.play(
         self.bb_line_avoid_ab.animate.set_opacity(1),
         self.bb_avoid_ab.animate.set_opacity(1),
         run_time=0.75,
         )
-        self.wait(0.8)
+        self.wait(1.3*0.8)
 
         # ------------------------------------------------------------
         # Explore Use R_AB
@@ -2485,7 +2491,7 @@ class CVRPVideo(Scene):
         run_time=0.7,
         )
 
-        self.wait(0.4)
+        self.wait(1.3*0.4)
 
         self.play(
         self.bb_route_ab.animate.set_opacity(1),
@@ -2495,7 +2501,7 @@ class CVRPVideo(Scene):
         run_time=1.0,
         )
 
-        self.wait(0.8)
+        self.wait(1.3*0.8)
 
         ab_card = make_scene8_card(
         [
@@ -2507,7 +2513,7 @@ class CVRPVideo(Scene):
         )
 
         self.play(FadeIn(ab_card, scale=0.96), run_time=0.65)
-        self.wait(1.8)
+        self.wait(1.3*1.8)
 
         # ------------------------------------------------------------
         # Complete with R_CD
@@ -2520,7 +2526,7 @@ class CVRPVideo(Scene):
         run_time=1.0,
         )
 
-        self.wait(0.7)
+        self.wait(1.3*0.7)
 
         cd_card = make_scene8_card(
         [
@@ -2532,7 +2538,7 @@ class CVRPVideo(Scene):
         )
 
         self.play(Transform(ab_card, cd_card), run_time=0.65)
-        self.wait(1.8)
+        self.wait(1.3*1.8)
 
         total_card = make_scene8_card(
         [
@@ -2544,7 +2550,7 @@ class CVRPVideo(Scene):
         )
 
         self.play(Transform(ab_card, total_card), run_time=0.65)
-        self.wait(1.8)
+        self.wait(1.3*1.8)
 
         solved_51 = self.make_tree_node(
         "Complete\ncost 51",
@@ -2563,7 +2569,7 @@ class CVRPVideo(Scene):
         ).move_to(self.bb_status_box.get_center())
 
         self.play(Transform(self.bb_status_text, best_51), run_time=0.55)
-        self.wait(0.8)
+        self.wait(1.3*0.8)
 
         self.play(FadeOut(ab_card), run_time=0.4)
 
@@ -2585,7 +2591,7 @@ class CVRPVideo(Scene):
         )
 
         self.play(FadeIn(prune_card, scale=0.96), run_time=0.65)
-        self.wait(1.8)
+        self.wait(1.3*1.8)
         # ------------------------------------------------------------
         # I guide cameo: pruning aha moment
         # ------------------------------------------------------------
@@ -2608,10 +2614,10 @@ class CVRPVideo(Scene):
         self.play(FadeIn(bubble_i, shift=LEFT), run_time=0.40)
         self.play(mascot_i.talk_open())
         self.play(mascot_i.talk_close())
-        self.wait(0.9)
+        self.wait(1.3*0.9)
 
         self.play(FadeOut(bubble_i), FadeOut(mascot_i), run_time=0.45)
-        self.wait(0.3)
+        self.wait(1.3*0.3)
 
         pruned_node = self.make_tree_node(
         "Pruned\nLB = 57",
@@ -2626,7 +2632,7 @@ class CVRPVideo(Scene):
         self.play(Transform(self.bb_avoid_ab, pruned_node), run_time=0.60)
         self.play(Create(x_mark), run_time=0.45)
 
-        self.wait(0.8)
+        self.wait(1.3*0.8)
 
         # ------------------------------------------------------------
         # Small takeaway
@@ -2640,15 +2646,15 @@ class CVRPVideo(Scene):
         )
 
         self.play(Transform(prune_card, takeaway_card), run_time=0.65)
-        self.wait(0.8)
+        self.wait(1.3*0.8)
 
-        self.wait(0.8)
+        self.wait(1.3*0.8)
 
 
         self.play(FadeOut(prune_card), FadeOut(branch_prompt), run_time=0.5)
 
         # Leave the final tree visible briefly.
-        self.wait(0.8)
+        self.wait(1.3*0.8)
 
     def play_scene_9_exact_methods_bridge(self):
         # ------------------------------------------------------------
@@ -2675,7 +2681,7 @@ class CVRPVideo(Scene):
                 run_time=0.85,
             )
 
-        self.wait(0.25)
+        self.wait(1.3*0.25)
 
         # ------------------------------------------------------------
         # Helper: deterministic "random-looking" network
@@ -2758,7 +2764,7 @@ class CVRPVideo(Scene):
 
         self.play(FadeIn(title, shift=DOWN), run_time=0.65)
         self.play(FadeIn(subtitle, shift=DOWN), run_time=0.50)
-        self.wait(0.8)
+        self.wait(1.3*0.8)
 
         # ------------------------------------------------------------
         # Small vs large network visuals
@@ -2806,12 +2812,12 @@ class CVRPVideo(Scene):
         ).move_to(DOWN * 2.35)
 
         self.play(FadeIn(small_net, scale=0.97), FadeIn(small_label), run_time=0.70)
-        self.wait(0.35)
+        self.wait(1.3*0.35)
         self.play(FadeIn(arrow, shift=RIGHT), run_time=0.45)
         self.play(FadeIn(big_net, scale=0.97), FadeIn(big_label), run_time=0.85)
-        self.wait(0.65)
+        self.wait(1.3*0.65)
         self.play(FadeIn(growth_note, shift=UP), run_time=0.55)
-        self.wait(1.3)
+        self.wait(1.3*1.3)
 
         harder_note = Text(
             "So exact search can become expensive as the instance grows.",
@@ -2820,7 +2826,7 @@ class CVRPVideo(Scene):
         ).move_to(DOWN * 2.35)
 
         self.play(Transform(growth_note, harder_note), run_time=0.55)
-        self.wait(1.0)
+        self.wait(1.3*1.0)
 
         stronger_note = Text(
             "That is why exact solvers use stronger tools.",
@@ -2829,7 +2835,7 @@ class CVRPVideo(Scene):
         ).move_to(DOWN * 2.35)
 
         self.play(Transform(growth_note, stronger_note), run_time=0.55)
-        self.wait(0.9)
+        self.wait(1.3*0.9)
 
         self.play(
             FadeOut(small_net),
@@ -3015,15 +3021,15 @@ class CVRPVideo(Scene):
         price_card.set_z_index(20)
 
         self.play(FadeIn(cut_card, shift=RIGHT * 0.18), run_time=0.65)
-        self.wait(0.7)
+        self.wait(1.3*0.7)
         self.play(Indicate(bad_subtour, color=CUT_COLOR, scale_factor=1.04), run_time=0.70)
-        self.wait(0.5)
+        self.wait(1.3*0.5)
 
         self.play(FadeIn(price_card, shift=LEFT * 0.18), run_time=0.65)
-        self.wait(0.6)
+        self.wait(1.3*0.6)
         self.play(Indicate(route_1, color=PRICE_COLOR, scale_factor=1.03), run_time=0.65)
         self.play(Indicate(route_3, color=PRICE_COLOR, scale_factor=1.03), run_time=0.65)
-        self.wait(0.8)
+        self.wait(1.3*0.8)
 
         # ------------------------------------------------------------
         # T guide cameo
@@ -3047,7 +3053,7 @@ class CVRPVideo(Scene):
         self.play(FadeIn(bubble_t, shift=RIGHT), run_time=0.40)
         self.play(mascot_t.talk_open())
         self.play(mascot_t.talk_close())
-        self.wait(1.0)
+        self.wait(1.3*1.0)
         self.play(FadeOut(bubble_t), FadeOut(mascot_t), run_time=0.45)
 
         # ------------------------------------------------------------
@@ -3060,7 +3066,7 @@ class CVRPVideo(Scene):
         ).move_to(DOWN * 2.35)
 
         self.play(Transform(growth_note, next_text), run_time=0.55)
-        self.wait(0.9)
+        self.wait(1.3*0.9)
 
         clarke_text = Text(
             "Next: Clarke-Wright Savings",
@@ -3069,7 +3075,7 @@ class CVRPVideo(Scene):
         ).move_to(DOWN * 2.35)
 
         self.play(Transform(growth_note, clarke_text), run_time=0.55)
-        self.wait(1.0)
+        self.wait(1.3*1.0)
 
         self.play(
             FadeOut(title),
@@ -3080,7 +3086,7 @@ class CVRPVideo(Scene):
             run_time=0.75,
         )
 
-        self.wait(0.25)
+        self.wait(1.3*0.25)
 
     def play_scene_10_clarke_wright_starting_point(self):
         # ------------------------------------------------------------
@@ -3108,7 +3114,7 @@ class CVRPVideo(Scene):
                 run_time=0.65,
             )
 
-        self.wait(0.2)
+        self.wait(1.3*0.2)
 
         # ------------------------------------------------------------
         # Build the original CVRP graph again
@@ -3142,7 +3148,7 @@ class CVRPVideo(Scene):
             run_time=1.20,
         )
 
-        self.wait(0.7)
+        self.wait(1.3*0.7)
 
         # ------------------------------------------------------------
         # Capacity reminder
@@ -3168,7 +3174,7 @@ class CVRPVideo(Scene):
         capacity_group.set_z_index(25)
 
         self.play(FadeIn(capacity_group, shift=LEFT), run_time=0.45)
-        self.wait(0.5)
+        self.wait(1.3*0.5)
 
         # ------------------------------------------------------------
         # Helper: route from depot to one customer and back
@@ -3237,7 +3243,7 @@ class CVRPVideo(Scene):
 
         self.play(FadeIn(route_formula, shift=UP), run_time=0.55)
         self.play(FadeIn(initial_label, shift=UP), run_time=0.50)
-        self.wait(0.6)
+        self.wait(1.3*0.6)
 
         # ------------------------------------------------------------
         # Draw representative routes one at a time
@@ -3249,7 +3255,7 @@ class CVRPVideo(Scene):
         ).move_to(LEFT * 3.10 + UP * 2.25)
 
         self.play(Create(route_A), FadeIn(route_a_label, shift=UP), run_time=1.0)
-        self.wait(0.55)
+        self.wait(1.3*0.55)
 
         route_c_label = MathTex(
             r"0 \to C \to 0",
@@ -3258,7 +3264,7 @@ class CVRPVideo(Scene):
         ).move_to(RIGHT * 0.65 + UP * 2.25)
 
         self.play(Create(route_C), FadeIn(route_c_label, shift=UP), run_time=1.0)
-        self.wait(0.55)
+        self.wait(1.3*0.55)
 
         route_g_label = MathTex(
             r"0 \to G \to 0",
@@ -3267,11 +3273,11 @@ class CVRPVideo(Scene):
         ).move_to(RIGHT * 3.30 + DOWN * 0.10)
 
         self.play(Create(route_G), FadeIn(route_g_label, shift=UP), run_time=1.0)
-        self.wait(0.55)
+        self.wait(1.3*0.55)
 
         # Now add the remaining one-customer routes faintly.
         self.play(FadeIn(faint_routes), run_time=0.85)
-        self.wait(0.8)
+        self.wait(1.3*0.8)
 
         route_labels = VGroup(route_a_label, route_c_label, route_g_label)
 
@@ -3311,7 +3317,7 @@ class CVRPVideo(Scene):
         feasible_wasteful_panel.set_z_index(30)
 
         self.play(FadeIn(feasible_wasteful_panel, scale=0.96), run_time=0.60)
-        self.wait(1.0)
+        self.wait(1.3*1.0)
 
       # ------------------------------------------------------------
         # I guide cameo
@@ -3335,7 +3341,7 @@ class CVRPVideo(Scene):
         self.play(FadeIn(bubble_i, shift=LEFT), run_time=0.40)
         self.play(mascot_i.talk_open())
         self.play(mascot_i.talk_close())
-        self.wait(1.0)
+        self.wait(1.3*1.0)
 
         self.play(FadeOut(bubble_i), FadeOut(mascot_i), run_time=0.45)
         # ------------------------------------------------------------
@@ -3358,7 +3364,7 @@ class CVRPVideo(Scene):
             run_time=0.65,
         )
 
-        self.wait(1.0)
+        self.wait(1.3*1.0)
 
         # Store useful objects for Scene 11
         self.cw_scene_title = scene_title
@@ -3433,7 +3439,7 @@ class CVRPVideo(Scene):
         ).move_to(UP * 0.65)
 
         self.play(FadeIn(idea_big, scale=0.88), run_time=0.55)
-        self.wait(0.45)
+        self.wait(1.3*0.45)
 
         idea_small_target = Text(
             "IDEA:",
@@ -3465,7 +3471,7 @@ class CVRPVideo(Scene):
 
         self.cw_scene11_title = VGroup(idea_big, merge_title)
 
-        self.wait(0.7)
+        self.wait(1.3*0.7)
 
         # ------------------------------------------------------------
         # Dim the full initial solution and focus on C and D
@@ -3479,7 +3485,7 @@ class CVRPVideo(Scene):
             run_time=0.85,
         )
 
-        self.wait(0.45)
+        self.wait(1.3*0.45)
 
         # ------------------------------------------------------------
         # Show separate routes
@@ -3515,10 +3521,10 @@ class CVRPVideo(Scene):
         ).move_to(RIGHT * 3.10 + UP * 1.05)
 
         self.play(Create(route_C_focus), FadeIn(c_label, shift=UP), run_time=0.95)
-        self.wait(0.45)
+        self.wait(1.3*0.45)
 
         self.play(Create(route_D_focus), FadeIn(d_label, shift=UP), run_time=0.95)
-        self.wait(0.65)
+        self.wait(1.3*0.65)
 
         separate_card = make_merge_card(
             [
@@ -3530,7 +3536,7 @@ class CVRPVideo(Scene):
         )
 
         self.play(FadeIn(separate_card, scale=0.96), run_time=0.55)
-        self.wait(0.8)
+        self.wait(1.3*0.8)
 
         # ------------------------------------------------------------
         # How does Clarke-Wright choose which routes to merge?
@@ -3546,7 +3552,7 @@ class CVRPVideo(Scene):
         )
 
         self.play(Transform(separate_card, choose_card), run_time=0.65)
-        self.wait(1.4)
+        self.wait(1.3*1.4)
 
         # Mini ranked savings list
         savings_title = Text(
@@ -3608,7 +3614,7 @@ class CVRPVideo(Scene):
         savings_panel.set_z_index(35)
 
         self.play(FadeIn(savings_panel, shift=RIGHT * 0.15), run_time=0.60)
-        self.wait(0.8)
+        self.wait(1.3*0.8)
 
         self.play(
             Indicate(rank_1, color=CW_GREEN, scale_factor=1.06),
@@ -3617,7 +3623,7 @@ class CVRPVideo(Scene):
             run_time=0.85,
         )
 
-        self.wait(0.8)
+        self.wait(1.3*0.8)
 
         best_pair_card = make_merge_card(
             [
@@ -3628,7 +3634,7 @@ class CVRPVideo(Scene):
         )
 
         self.play(Transform(separate_card, best_pair_card), run_time=0.65)
-        self.wait(1.2)
+        self.wait(1.3*1.2)
 
         # ------------------------------------------------------------
         # Explain what "merge" means
@@ -3643,7 +3649,7 @@ class CVRPVideo(Scene):
         )
 
         self.play(Transform(separate_card, merge_steps_card), run_time=0.65)
-        self.wait(1.2)
+        self.wait(1.3*1.2)
 
         # ------------------------------------------------------------
         # Add cost labels for the edges involved
@@ -3677,7 +3683,7 @@ class CVRPVideo(Scene):
             FadeIn(cost_0d, scale=0.9),
             run_time=0.55,
         )
-        self.wait(0.6)
+        self.wait(1.3*0.6)
 
         # ------------------------------------------------------------
         # Highlight the two depot legs being removed
@@ -3693,7 +3699,7 @@ class CVRPVideo(Scene):
             run_time=0.65,
         )
 
-        self.wait(0.7)
+        self.wait(1.3*0.7)
 
         removed_card = make_merge_card(
             [
@@ -3704,7 +3710,7 @@ class CVRPVideo(Scene):
         )
 
         self.play(Transform(separate_card, removed_card), run_time=0.60)
-        self.wait(1.0)
+        self.wait(1.3*1.0)
 
         self.play(
             FadeOut(remove_c_back),
@@ -3712,7 +3718,7 @@ class CVRPVideo(Scene):
             run_time=0.65,
         )
 
-        self.wait(0.4)
+        self.wait(1.3*0.4)
 
         # ------------------------------------------------------------
         # Add the new customer-to-customer edge C -> D
@@ -3731,7 +3737,7 @@ class CVRPVideo(Scene):
             run_time=0.75,
         )
 
-        self.wait(0.7)
+        self.wait(1.3*0.7)
 
         added_card = make_merge_card(
             [
@@ -3742,7 +3748,7 @@ class CVRPVideo(Scene):
         )
 
         self.play(Transform(separate_card, added_card), run_time=0.65)
-        self.wait(1.0)
+        self.wait(1.3*1.0)
 
         merged_cd = VGroup(route_C_focus[0], connect_cd, route_D_focus[1])
 
@@ -3758,7 +3764,7 @@ class CVRPVideo(Scene):
             run_time=0.55,
         )
 
-        self.wait(0.6)
+        self.wait(1.3*0.6)
 
         # ------------------------------------------------------------
         # Compute savings from the merge
@@ -3773,7 +3779,7 @@ class CVRPVideo(Scene):
         )
 
         self.play(Transform(separate_card, savings_card), run_time=0.65)
-        self.wait(1.5)
+        self.wait(1.3*1.5)
 
         cost_change_card = make_merge_card(
             [
@@ -3785,7 +3791,7 @@ class CVRPVideo(Scene):
         )
 
         self.play(Transform(separate_card, cost_change_card), run_time=0.65)
-        self.wait(1.5)
+        self.wait(1.3*1.5)
 
         # ------------------------------------------------------------
         # Capacity check
@@ -3800,7 +3806,7 @@ class CVRPVideo(Scene):
         )
 
         self.play(Transform(separate_card, capacity_card), run_time=0.65)
-        self.wait(1.4)
+        self.wait(1.3*1.4)
 
         accept_check = Text(
             "✓ Accept merge",
@@ -3810,7 +3816,7 @@ class CVRPVideo(Scene):
         accept_check.set_z_index(40)
 
         self.play(FadeIn(accept_check, shift=UP), run_time=0.45)
-        self.wait(0.8)
+        self.wait(1.3*0.8)
 
         # ------------------------------------------------------------
         # M guide cameo
@@ -3833,7 +3839,7 @@ class CVRPVideo(Scene):
         self.play(FadeIn(bubble_m, shift=RIGHT), run_time=0.40)
         self.play(mascot_m.talk_open())
         self.play(mascot_m.talk_close())
-        self.wait(1.0)
+        self.wait(1.3*1.0)
 
         self.play(FadeOut(bubble_m), FadeOut(mascot_m), run_time=0.45)
 
@@ -3864,7 +3870,7 @@ class CVRPVideo(Scene):
         )
 
         self.play(Transform(separate_card, reject_card), run_time=0.65)
-        self.wait(1.3)
+        self.wait(1.3*1.3)
 
         self.play(FadeOut(attempt_line), run_time=0.35)
 
@@ -3885,7 +3891,7 @@ class CVRPVideo(Scene):
             run_time=0.65,
         )
 
-        self.wait(1.5)
+        self.wait(1.3*1.5)
 
         self.play(
             FadeOut(separate_card),
@@ -3905,8 +3911,166 @@ class CVRPVideo(Scene):
         self.cw_scene11_hint.set_z_index(35)
 
         self.play(FadeIn(self.cw_scene11_hint, shift=UP), run_time=0.45)
-        self.wait(0.8)
+        self.wait(1.3*0.8)
 
+    def play_scene_12_closing(self):
+        # ------------------------------------------------------------
+        # Final Scene: Closing / Next Video Teaser
+        #
+        # Goal:
+        #   - wrap up the CVRP intro
+        #   - tease learning-based methods for the next video
+        #   - have M, I, and T each say one short thing
+        # ------------------------------------------------------------
+
+        T_COLOR = "#7A1325"
+        I_COLOR = "#8A8B8C"
+
+        # Clear whatever is left from Scene 11
+        if len(self.mobjects) > 0:
+            self.play(
+                *[FadeOut(mob, shift=DOWN * 0.08) for mob in list(self.mobjects)],
+                run_time=0.75,
+            )
+
+        self.wait(1.3*0.25)
+
+        title = Text(
+            "That’s all for today!",
+            font_size=42,
+            color=WHITE,
+        ).move_to(UP * 2.15)
+
+        subtitle = Text(
+            "Next time: learning-based methods for routing.",
+            font_size=25,
+            color=GRAY,
+        ).next_to(title, DOWN, buff=0.22)
+
+        self.play(FadeIn(title, shift=DOWN), run_time=0.65)
+        self.wait(1.3*0.35)
+        self.play(FadeIn(subtitle, shift=DOWN), run_time=0.55)
+        self.wait(1.3*0.6)
+
+        # ------------------------------------------------------------
+        # M mascot: wrap up
+        # ------------------------------------------------------------
+        mascot_m = LetterMascot("M", body_color=MIT_RED, scale_factor=0.62)
+        mascot_m.move_to(LEFT * 4.25 + DOWN * 1.35)
+        mascot_m.set_z_index(30)
+
+        bubble_m = SpeechBubble(
+            "That’s all\nwe have today.",
+            width=3.05,
+            height=1.08,
+            direction=DOWN,
+            font_size=20,
+        )
+        bubble_m.next_to(mascot_m, UP, buff=0.18)
+        bubble_m.set_z_index(35)
+
+        self.play(FadeIn(mascot_m, scale=0.85), run_time=0.40)
+        self.play(FadeIn(bubble_m, shift=DOWN), run_time=0.40)
+        self.play(mascot_m.talk_open())
+        self.play(mascot_m.talk_close())
+        self.wait(1.3*0.85)
+        self.play(FadeOut(bubble_m), run_time=0.30)
+
+        # ------------------------------------------------------------
+        # I mascot: next video
+        # ------------------------------------------------------------
+        mascot_i = LetterMascot("I", body_color=I_COLOR, scale_factor=0.62)
+        mascot_i.rotate(-7 * DEGREES)
+        mascot_i.move_to(DOWN * 1.35)
+        mascot_i.set_z_index(30)
+
+        bubble_i = SpeechBubble(
+            "Next video:\nlearning methods.",
+            width=3.20,
+            height=1.08,
+            direction=DOWN,
+            font_size=20,
+        )
+        bubble_i.next_to(mascot_i, UP, buff=0.18)
+        bubble_i.set_z_index(35)
+
+        self.play(FadeIn(mascot_i, scale=0.85), run_time=0.40)
+        self.play(FadeIn(bubble_i, shift=DOWN), run_time=0.40)
+        self.play(mascot_i.talk_open())
+        self.play(mascot_i.talk_close())
+        self.wait(1.3*0.85)
+        self.play(FadeOut(bubble_i), run_time=0.30)
+
+        # ------------------------------------------------------------
+        # T mascot: thanks / CTA
+        # ------------------------------------------------------------
+        mascot_t = LetterMascot("T", body_color=T_COLOR, scale_factor=0.62)
+        mascot_t.rotate(8 * DEGREES)
+        mascot_t.move_to(RIGHT * 4.25 + DOWN * 1.35)
+        mascot_t.set_z_index(30)
+
+        bubble_t = SpeechBubble(
+            "Thanks for\nwatching!",
+            width=2.95,
+            height=1.08,
+            direction=DOWN,
+            font_size=20,
+        )
+        bubble_t.next_to(mascot_t, UP, buff=0.18)
+        bubble_t.set_z_index(35)
+
+        self.play(FadeIn(mascot_t, scale=0.85), run_time=0.40)
+        self.play(FadeIn(bubble_t, shift=DOWN), run_time=0.40)
+        self.play(mascot_t.talk_open())
+        self.play(mascot_t.talk_close())
+        self.wait(1.3*0.85)
+        self.play(FadeOut(bubble_t), run_time=0.30)
+
+        # ------------------------------------------------------------
+        # Final like/comment/subscribe message
+        # ------------------------------------------------------------
+        cta = Text(
+            "Like  •  Comment  •  Subscribe",
+            font_size=34,
+            color=WHITE,
+        ).move_to(DOWN * 2.75)
+
+        cta_box = RoundedRectangle(
+            width=cta.width + 0.75,
+            height=cta.height + 0.38,
+            corner_radius=0.18,
+            stroke_color=ROUTE_COLOR,
+            stroke_width=2.0,
+            fill_color=BUBBLE_FILL,
+            fill_opacity=0.92,
+        ).move_to(cta.get_center())
+
+        cta_group = VGroup(cta_box, cta)
+        cta_group.set_z_index(40)
+
+        self.play(FadeIn(cta_group, scale=0.95), run_time=0.55)
+
+        self.play(
+            mascot_m.bounce(distance=0.08),
+            mascot_i.bounce(distance=0.08),
+            mascot_t.bounce(distance=0.08),
+            run_time=0.45,
+        )
+
+        self.play(Indicate(cta_group, color=ROUTE_COLOR, scale_factor=1.03), run_time=0.75)
+        self.wait(1.3*1.25)
+
+        self.play(
+            FadeOut(title),
+            FadeOut(subtitle),
+            FadeOut(mascot_m),
+            FadeOut(mascot_i),
+            FadeOut(mascot_t),
+            FadeOut(cta_group),
+            run_time=0.9,
+        )
+
+        self.wait(1.3*0.3)
 
     def setup_after_scene_1(self):
         """
